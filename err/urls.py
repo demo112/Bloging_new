@@ -4,5 +4,5 @@ from . import views
 app_name = 'err'
 
 urlpatterns = [
-    path('', include('views.back_index', name='back_index')),
+    # path('', include('views.back_index', name='back_index')),
 ]
