@@ -3,15 +3,14 @@
     <div class="container">
 
         <!-- 导航栏商标 -->
-        <a class="navbar-brand" href="#">Cooper的博客</a>
+        <a class="navbar-brand" href="{% url 'article:article_list' %}">Cooper的博客</a>
 
         <!-- 导航入口 -->
         <div>
             <ul class="navbar-nav">
                 <!-- 条目 -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">文章</a>
-                </li>
+                    <a class="nav-link" href="{% url 'article:article_list' %}">文章</a></li>
             </ul>
         </div>
 
