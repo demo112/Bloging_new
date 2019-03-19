@@ -1,0 +1,19 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    错误页面
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">错误的请求方式</h1>
+        <p class="lead">你是不是偷偷改我网页了</p>
+        <hr class="my-4">
+        <p>要不回主页看点别的？</p>
+        <a class="btn btn-primary btn-lg" role="button" href={% url 'article:article_list' %}>回到主页</a>
+    </div>
+{% endblock content %}

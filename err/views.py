@@ -9,3 +9,7 @@ def back_index(request):
 def not_found(request, e):
     e = {'e': e}
     return render(request, 'err/not_found.html', e)
+
+
+def wrong_method(request):
+    return render(request, 'err/wrong_method.html')

@@ -1,0 +1,19 @@
+<!-- extends表明此页面继承自 base.html 文件 -->
+{% extends "base.html" %}
+{% load staticfiles %}
+
+<!-- 写入 base.html 中定义的 title -->
+{% block title %}
+    错误根页面：暂时不起用
+{% endblock title %}
+
+<!-- 写入 base.html 中定义的 content -->
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-4">{{ message }}</h1>
+        <p class="lead">{{ degitail }}</p>
+        <hr class="my-4">
+        <p>{{ kind_of_err }}</p>
+        <a class="btn btn-primary btn-lg" role="button" href='{{ url }}'>{{ next }}</a>
+    </div>
+{% endblock content %}

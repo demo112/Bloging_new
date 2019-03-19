@@ -4,6 +4,14 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import ArticlePost
+# 引入redirect重定向模块
+from django.shortcuts import render, redirect
+# 引入HttpResponse
+from django.http import HttpResponse
+# 引入刚才定义的ArticlePostForm表单类
+from .forms import ArticlePostForm
+# 引入User模型
+from django.contrib.auth.models import User
 
 
 # Create your views here.
@@ -35,3 +43,33 @@ def article_detail(request, article_id):
         return render(request, 'article/detail.html', context)
     except Exception as e:
         return redirect('err:not_found', e=e)
+
+
+def article_create(request):
+    # 判断用户是否提交数据
+    if request.method == "POST":
+        # 将提交的数据赋值到表单实例中
+        article_post_form = ArticlePostForm(data=request.POST)
+        # 判断提交的数据是否满足模型的要求
+        if article_post_form.is_valid():
+            # 保存数据，但暂时不提交到数据库中
+            new_article = article_post_form.save(commit=False)
+            # 指定数据库中 id=1 的用户为作者
+            new_article.author = User.objects.get(id=1)
+            # 将新文章保存到数据库中
+            new_article.save()
+            # 完成后返回到文章列表
+            return redirect("article:article_list")
+        # 如果数据不合法，返回错误信息
+        else:
+            return HttpResponse("表单内容有误，请重新填写。")
+    # 如果用户请求获取数据
+    elif request.method == "GET":
+        # 创建表单类实例
+        article_post_form = ArticlePostForm()
+        # 赋值上下文
+        context = {'article_post_form': article_post_form}
+        # 返回模板
+        return render(request, 'article/create.html', context)
+    else:
+        return redirect('err:wrong_method')
