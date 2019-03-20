@@ -106,7 +106,7 @@ def article_update(request, article_id):
             return redirect("article:article_detail", article_id=article_id)
         # 如果数据不合法，返回错误信息
         else:
-            return HttpResponse("表单内容有误，请重新填写。")
+            return redirect('err:wrong_input')
 
     # 如果用户 GET 请求获取数据
     elif request.method == "GET":

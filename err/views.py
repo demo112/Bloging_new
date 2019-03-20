@@ -13,3 +13,12 @@ def not_found(request, e):
 
 def wrong_method(request):
     return render(request, 'err/wrong_method.html')
+
+
+def wrong_input(request, e):
+    e = {'e': e}
+    return render(request, 'err/wrong_register.html', e)
+
+
+def no_permission(request):
+    return render(request, 'err/no_permission.html')

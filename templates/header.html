@@ -42,11 +42,11 @@
                         <span class="sr-only">Toggle Dropdown</span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href='{% url "userprofile:logout" %}'>退出登录</a>
                         <a class="dropdown-item" href="#">Action1</a>
                         <a class="dropdown-item" href="#">Action2</a>
+                        <a class="dropdown-item" href="#" onclick="user_delete()">删除用户</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href='{% url "userprofile:logout" %}'>退出登录</a>
                     </div>
                 </div>
             {% else %}
@@ -56,3 +56,18 @@
         </div>
     </div>
 </nav>
+
+{% if user.is_authenticated %}
+    <script>
+        function user_delete() {
+            // 调用layer弹窗组件
+            layer.open({
+                title: "确认删除",
+                content: "确认删除用户资料吗？",
+                yes: function (index, layero) {
+                    location.href = '{% url "userprofile:delete" user.id %}'
+                },
+            })
+        }
+    </script>
+{% endif %}
