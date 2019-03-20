@@ -23,10 +23,11 @@ urlpatterns = [
 
 urlpatterns += [
     path('article/', include('article.urls', namespace='article')),
-    path('err/', include('err.urls', namespace='err')),
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
+    path('password-reset/', include('password_reset.urls')),
+
 ]
 
 urlpatterns += [
-    url(r'^', include('err.urls')),
+    url(r'^|err/', include('err.urls', namespace='err')),
 ]

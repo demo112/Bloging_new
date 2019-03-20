@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'err',
     'userprofile',
 ]
+# 第三方应用
+INSTALLED_APPS += [
+    'password_reset',
+]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,8 +118,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# 静态文件路径
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
+
+# 服务器邮箱
+# SMTP服务器，改为你的邮箱的smtp
+EMAIL_HOST = 'smtp.qq.com'
+# 邮箱名
+EMAIL_HOST_NAME = '1634237857@qq.com'
+# 邮箱密码
+EMAIL_HOST_PASSWORD = 'bingyan@1214'
+# 发送端口
+EMAIL_POST = 25
+# 是否使用TLS
+EMAIL_uSE_TLS = True
+# 默认发件人
+DEFAULT_FROM_EMAIL = 'Cooper 的博客网站1634237857@qq.com'
