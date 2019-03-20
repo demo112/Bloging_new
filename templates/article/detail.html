@@ -43,6 +43,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                         <a class="dropdown-item" onclick="confirm_delete()">删除文章</a>
+                        <a class="dropdown-item" href="{% url "article:article_update" article.id %}">编辑文章</a>
                         <a class="dropdown-item" href="#">Dropdown link</a>
                     </div>
                 </div>

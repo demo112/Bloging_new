@@ -29,7 +29,6 @@ def article_list(request):
 def article_detail(request, article_id):
     try:
         article = ArticlePost.objects.get(id=article_id)
-
         # 将markdown语法渲染成html样式
         article.body = markdown.markdown(
             article.body,
@@ -107,8 +106,8 @@ def article_update(request, article_id):
             article.title = request.POST['title']
             article.body = request.POST['body']
             article.save()
-            # 完成后返回到修改后的文章中。需传入文章的 id 值
-            return redirect("article:article_detail", id=article_id)
+            # 完成后返回到修改后的文章中。需传入文章的 article_id 值
+            return redirect("article:article_detail", article_id=article_id)
         # 如果数据不合法，返回错误信息
         else:
             return HttpResponse("表单内容有误，请重新填写。")

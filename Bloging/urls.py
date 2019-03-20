@@ -27,5 +27,5 @@ urlpatterns += [
 ]
 
 urlpatterns += [
-    url(r'^', include('err.urls', namespace='err')),
+    url(r'^', include('err.urls')),
 ]
