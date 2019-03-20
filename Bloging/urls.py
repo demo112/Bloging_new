@@ -24,6 +24,7 @@ urlpatterns = [
 urlpatterns += [
     path('article/', include('article.urls', namespace='article')),
     path('err/', include('err.urls', namespace='err')),
+    path('userprofile/', include('userprofile.urls', namespace='userprofile')),
 ]
 
 urlpatterns += [

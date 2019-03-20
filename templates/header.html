@@ -33,19 +33,26 @@
                     </form>
                 </li>
             </ul>
-            <div class="btn-group">
-                <button type="button" class="btn btn-dark">Action</button>
-                <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split"
-                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Something else here</a>
+            {% if user.is_authenticated %}
+                <div class="btn-group">
+                    <a class="btn btn-dark btn-primary" role="button"
+                       href={% url 'article:article_list' %}>{{ user.username }}的个人主页</a>
+                    <button type="button" class="btn btn-dark dropdown-toggle dropdown-toggle-split"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href='{% url "userprofile:logout" %}'>退出登录</a>
+                        <a class="dropdown-item" href="#">Action1</a>
+                        <a class="dropdown-item" href="#">Action2</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
                 </div>
-            </div>
+            {% else %}
+                <a class="btn btn-dark btn-primary" role="button" href={% url 'userprofile:login' %}>登陆</a>
+                <!-- if 语句在这里结束 -->
+            {% endif %}
         </div>
     </div>
 </nav>

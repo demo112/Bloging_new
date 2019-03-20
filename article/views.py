@@ -1,8 +1,4 @@
 import markdown as markdown
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
-from django.urls import reverse
-
 from .models import ArticlePost
 # 引入redirect重定向模块
 from django.shortcuts import render, redirect
