@@ -9,6 +9,13 @@
 
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
+    <script LANGUAGE="JavaScript">
+
+        var test = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark"];
+        class
+        = test[Math.floor(Math.random() * test.length)];
+    </script>
+
     <style>
         .card-columns {
 
@@ -22,10 +29,9 @@
     </style>
     <!-- 定义放置文章标题的div容器 -->
     <div class="container">
-        <div class="card-columns">
+        <div class="card-columns mt-md-2">
             {% for article in articles %}
                 <!-- 文章内容 -->
-
                 <div class="card">
                     <!-- 标题 -->
                     <h4 class="card-header">{{ article.title }}</h4>

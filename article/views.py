@@ -1,3 +1,5 @@
+import random
+
 import markdown as markdown
 from .models import ArticlePost
 # 引入redirect重定向模块
@@ -15,6 +17,8 @@ def article_list(request):
     # 取出所有博客文章
     articles = ArticlePost.objects.all()
     # 需要传递给模板（templates）的对象
+    # styles = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark"]
+    # style = styles[random.random(len(styles))]
     context = {'articles': articles}
     # render函数：载入模板，并返回context对象
     return render(request, 'article/list.html', context)
