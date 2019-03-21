@@ -10,13 +10,21 @@ from django.http import HttpResponse
 from .forms import ArticlePostForm
 # 引入User模型
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 
 
 # Create your views here.
 def article_list(request):
     # 取出所有博客文章
-    articles = ArticlePost.objects.all()
-    # 需要传递给模板（templates）的对象
+    article_list = ArticlePost.objects.all()
+    # 每页显示 1 篇文章
+    paginator = Paginator(article_list, 2)
+    # 获取 url 中的页码
+    page = request.GET.get('page')
+    # 将导航对象相应的页码内容返回给 articles
+    articles = paginator.get_page(page)
+
+    # todo 需要传递给模板（templates）的对象
     # styles = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark"]
     # style = styles[random.random(len(styles))]
     context = {'articles': articles}

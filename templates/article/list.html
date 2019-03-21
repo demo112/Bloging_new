@@ -9,15 +9,10 @@
 
 <!-- 写入 base.html 中定义的 content -->
 {% block content %}
-    <script LANGUAGE="JavaScript">
-
-        var test = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark"];
-        class
-        = test[Math.floor(Math.random() * test.length)];
-    </script>
-
+    <!--suppress ALL -->
     <style>
         .card-columns {
+        }
 
         @include (media-breakpoint-only(lg) {
             column-count: 4;
@@ -25,7 +20,7 @@
         @include media-breakpoint-only(xl) {
             column-count: 5;
         }
-        }
+
     </style>
     <!-- 定义放置文章标题的div容器 -->
     <div class="container">
@@ -47,6 +42,44 @@
                     <!-- 卡片容器 -->
                 </div>
             {% endfor %}
+        </div>
+    </div>
+
+    <!-- 页码导航 -->
+    <div class="pagination row">
+        <div class="m-auto">
+        <span class="step-links">
+            <!-- 如果不是第一页，则显示上翻按钮 -->
+            {% if articles.has_previous %}
+                <a href="?page=1" class="btn btn-success">
+                    &laquo; 首页
+                </a>
+                <span>...</span>
+                <a href="?page={{ articles.previous_page_number }}" class="btn btn-secondary">
+                    {{ articles.previous_page_number }}
+                </a>
+            {% endif %}
+
+            <!-- 当前页面 -->
+            <span class="current btn btn-danger btn-lg">
+                {{ articles.number }}
+            </span>
+
+            <!-- 如果不是最末页，则显示下翻按钮 -->
+            {% if articles.has_next %}
+                <a href=?page={{ articles.next_page_number }}
+                   class="btn btn-secondary"
+                >
+                    {{ articles.next_page_number }}
+                </a>
+                <span>...</span>
+                <a href=?page={{ articles.paginator.num_pages }}
+                   class="btn btn-success"
+                >
+                    尾页（{{ articles.paginator.num_pages }}） &raquo;
+                </a>
+            {% endif %}
+        </span>
         </div>
     </div>
 {% endblock content %}
