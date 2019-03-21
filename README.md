@@ -78,3 +78,7 @@ $ pipenv lock
 ```cmd
 $ pipenv uninstall --all
 ```
+
+# 项目依赖包
+
+***pip install Pillow django==2.1.7 markdown pygments django-password-reset***

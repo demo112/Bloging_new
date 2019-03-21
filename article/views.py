@@ -17,8 +17,8 @@ from django.core.paginator import Paginator
 def article_list(request):
     # 取出所有博客文章
     article_list = ArticlePost.objects.all()
-    # 每页显示 1 篇文章
-    paginator = Paginator(article_list, 2)
+    # 每页显示的文章，每页最少，可以首页为空
+    paginator = Paginator(article_list, 6, 3, True)
     # 获取 url 中的页码
     page = request.GET.get('page')
     # 将导航对象相应的页码内容返回给 articles

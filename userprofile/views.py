@@ -92,6 +92,7 @@ def profile_edit(request, user_id):
             profile.phone = profile_cd['phone']
             profile.bio = profile_cd['bio']
             if 'avatar' in request.FILES:
+                # todo 服务器上头像下载很慢， 上传还可以
                 profile.avatar = profile_cd['avatar']
                 print(profile.avatar)
             profile.save()
