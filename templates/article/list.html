@@ -17,6 +17,33 @@
     </style>
     <!-- 定义放置文章标题的div容器 -->
     <div class="container">
+
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href={% url 'article:article_order' 'created' %}>
+                        最新发布
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href={% url 'article:article_order' 'total_views' %}>
+                        最热
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href={% url 'article:article_order' 'updated' %}>
+                        最近更新
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href={% url 'article:article_order' 'author_id' %}>
+                        作者
+                    </a>
+                </li>
+            </ol>
+        </nav>
+        <!-- 卡片容器 -->
         <div class="card-columns mt-md-2">
             {% for article in articles %}
                 <!-- 文章内容 -->
@@ -35,10 +62,7 @@
                                 浏览: {{ article.total_views }}
                             </small>
                         </span>
-
                     </div>
-
-                    <!-- 卡片容器 -->
                 </div>
             {% endfor %}
         </div>

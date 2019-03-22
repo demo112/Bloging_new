@@ -3,7 +3,7 @@ import random
 import markdown as markdown
 from .models import ArticlePost
 # 引入redirect重定向模块
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 # 引入HttpResponse
 from django.http import HttpResponse
 # 引入刚才定义的ArticlePostForm表单类
@@ -13,10 +13,20 @@ from django.contrib.auth.models import User
 from django.core.paginator import Paginator
 
 
+def article_order(request, order):
+    url = request.META['HTTP_REFERER']
+    print(url)
+    response = redirect('article:article_list')
+    response.set_cookie('order', order, 60 * 60 * 10)
+    return response
+
+
 # Create your views here.
 def article_list(request):
+    order = request.COOKIES['order']
+    print(order)
     # 取出所有博客文章
-    articles_list = ArticlePost.objects.all()
+    articles_list = ArticlePost.objects.all().order_by('-' + order)
     # 每页显示的文章，每页最少，可以首页为空
     paginator = Paginator(articles_list, 6, 3, True)
     # 获取 url 中的页码
