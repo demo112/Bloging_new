@@ -31,23 +31,29 @@
         <div class="row">
             <!-- 标题及作者 -->
             <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-            <div class="col-12 alert alert-success">作者：{{ article.author }}</div>
+            <div class="col-12 alert alert-success">
+                作者：{{ article.author }} &nbsp;
+                浏览：{{ article.total_views }} &nbsp;
+            </div>
 
-            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                <button type="button" onclick="confirm_delete()" class="btn btn-secondary">删除文章</button>
-                <button type="button" class="btn btn-secondary">2</button>
-                <div class="btn-group" role="group">
-                    <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        编辑
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                        <a class="dropdown-item" onclick="confirm_delete()">删除文章</a>
-                        <a class="dropdown-item" href="{% url "article:article_update" article.id %}">编辑文章</a>
-                        <a class="dropdown-item" href="#">Dropdown link</a>
+            {% if user == article.author %}
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <button type="button" onclick="confirm_delete()" class="btn btn-secondary">删除文章</button>
+                    <button type="button" class="btn btn-secondary">2</button>
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            编辑
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <a class="dropdown-item" onclick="confirm_delete()">删除文章</a>
+                            <a class="dropdown-item" href="{% url "article:article_update" article.id %}">编辑文章</a>
+                            <a class="dropdown-item" href="#">Dropdown link</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
+
             <!-- 文章正文 -->
             <div class="col-12">
                 <p>{{ article.body|safe }}</p>

@@ -22,6 +22,9 @@ class ArticlePost(models.Model):
     # 文章更新时间。参数 auto_now=True 指定每次数据更新时自动写入当前时间
     updated = models.DateTimeField(auto_now=True)
 
+    # 浏览量
+    total_views = models.PositiveIntegerField(default=0)
+
     class Meta:
         ordering = ('-created',)
         verbose_name = '文章'

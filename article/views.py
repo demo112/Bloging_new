@@ -16,9 +16,9 @@ from django.core.paginator import Paginator
 # Create your views here.
 def article_list(request):
     # 取出所有博客文章
-    article_list = ArticlePost.objects.all()
+    articles_list = ArticlePost.objects.all()
     # 每页显示的文章，每页最少，可以首页为空
-    paginator = Paginator(article_list, 6, 3, True)
+    paginator = Paginator(articles_list, 6, 3, True)
     # 获取 url 中的页码
     page = request.GET.get('page')
     # 将导航对象相应的页码内容返回给 articles
@@ -47,12 +47,22 @@ def article_detail(request, article_id):
                 'markdown.extensions.codehilite',
             ])
         context = {'article': article}
+        # 增加阅读量
+        # todo 解决无登陆刷新也可以增加的问题
+        print(request.GET)
+        if not article.author.id == request.user.id:
+            article.total_views += 1
+            article.save(update_fields=['total_views'])
         return render(request, 'article/detail.html', context)
     except Exception as e:
         return redirect('err:not_found', e=e)
 
 
 def article_create(request):
+    if request.user.id:
+        pass
+    else:
+        return redirect('userprofile:login')
     # 判断用户是否提交数据
     if request.method == "POST":
         # 将提交的数据赋值到表单实例中
@@ -61,7 +71,7 @@ def article_create(request):
         if article_post_form.is_valid():
             # 保存数据，但暂时不提交到数据库中
             new_article = article_post_form.save(commit=False)
-            # 指定数据库中 id=1 的用户为作者
+            # 指定数据库中作者的用户id
             new_article.author = User.objects.get(id=request.user.id)
             # 将新文章保存到数据库中
             new_article.save()
@@ -69,7 +79,7 @@ def article_create(request):
             return redirect("article:article_list")
         # 如果数据不合法，返回错误信息
         else:
-            return HttpResponse("表单内容有误，请重新填写。")
+            return redirect('err:wrong_input', e='表单内容有误~')
     # 如果用户请求获取数据
     elif request.method == "GET":
         # 创建表单类实例
@@ -104,6 +114,9 @@ def article_update(request, article_id):
 
     # 获取需要修改的具体文章对象
     article = ArticlePost.objects.get(id=article_id)
+    # 鉴权
+    if request.user != article.author:
+        redirect('err:no_permission')
     # 判断用户是否为 POST 提交表单数据
     if request.method == "POST":
         # 将提交的数据赋值到表单实例中
