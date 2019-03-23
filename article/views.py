@@ -14,8 +14,6 @@ from django.core.paginator import Paginator
 
 
 def article_order(request, order):
-    url = request.META['HTTP_REFERER']
-    print(url)
     response = redirect('article:article_list')
     response.set_cookie('order', order, 60 * 60 * 10)
     return response
@@ -23,8 +21,10 @@ def article_order(request, order):
 
 # Create your views here.
 def article_list(request):
-    order = request.COOKIES['order']
-    print(order)
+    try:
+        order = request.COOKIES['order']
+    except:
+        order = 'created'
     # 取出所有博客文章
     articles_list = ArticlePost.objects.all().order_by('-' + order)
     # 每页显示的文章，每页最少，可以首页为空
