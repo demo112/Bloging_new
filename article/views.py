@@ -1,6 +1,8 @@
 import random
 
 import markdown as markdown
+from django.db.models import Q
+
 from .models import ArticlePost
 # 引入redirect重定向模块
 from django.shortcuts import render, redirect, render_to_response
@@ -27,6 +29,12 @@ def article_list(request):
         order = 'created'
     # 取出所有博客文章
     articles_list = ArticlePost.objects.all().order_by('-' + order)
+    search = request.GET.get('search')
+    if search:
+        articles_list = articles_list.filter(
+            Q(title__icontains=search) |
+            Q(body__icontains=search)
+        )
     # 每页显示的文章，每页最少，可以首页为空
     paginator = Paginator(articles_list, 6, 3, True)
     # 获取 url 中的页码
@@ -37,7 +45,10 @@ def article_list(request):
     # todo 需要传递给模板（templates）的对象
     # styles = ["bg-primary", "bg-secondary", "bg-success", "bg-danger", "bg-warning", "bg-info", "bg-dark"]
     # style = styles[random.random(len(styles))]
-    context = {'articles': articles}
+    context = {
+        'articles': articles,
+        'search': search,
+    }
     # render函数：载入模板，并返回context对象
     return render(request, 'article/list.html', context)
     # todo 使用另一种博客预览

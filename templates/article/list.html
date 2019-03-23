@@ -15,10 +15,9 @@
             column-count: 3;
         }
     </style>
+
     <!-- 定义放置文章标题的div容器 -->
     <div class="container">
-
-
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
@@ -42,6 +41,16 @@
                     </a>
                 </li>
             </ol>
+            <!-- 搜索提示语 -->
+            {% if search %}
+                {% if articles %}
+                    <h4><span style="color: red">"{{ search }}"</span>的搜索结果如下：</h4>
+                    <hr>
+                {% else %}
+                    <h4>暂无<span style="color: red">"{{ search }}"</span>有关的文章。</h4>
+                    <hr>
+                {% endif %}
+            {% endif %}
         </nav>
         <!-- 卡片容器 -->
         <div class="card-columns mt-md-2">
@@ -74,11 +83,11 @@
         <span class="step-links">
             <!-- 如果不是第一页，则显示上翻按钮 -->
             {% if articles.has_previous %}
-                <a href="?page=1" class="btn btn-success">
+                <a href=?page=1&search={{ search }} class="btn btn-success">
                     &laquo; 首页
                 </a>
                 <span>...</span>
-                <a href=?page={{ articles.previous_page_number }} class="btn btn-secondary">
+                <a href=?page={{ articles.previous_page_number }}&search={{ search }} class="btn btn-secondary">
                     {{ articles.previous_page_number }}
                 </a>
             {% endif %}
@@ -90,13 +99,13 @@
 
             <!-- 如果不是最末页，则显示下翻按钮 -->
             {% if articles.has_next %}
-                <a href=?page={{ articles.next_page_number }}
+                <a href=?page={{ articles.next_page_number }}&search={{ search }}
                    class="btn btn-secondary"
                 >
                     {{ articles.next_page_number }}
                 </a>
                 <span>...</span>
-                <a href=?page={{ articles.paginator.num_pages }}
+                <a href=?page={{ articles.paginator.num_pages }}&search={{ search }}
                    class="btn btn-success"
                 >
                     尾页（{{ articles.paginator.num_pages }}） &raquo;
