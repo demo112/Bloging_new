@@ -1,6 +1,6 @@
 import random
 
-import markdown as markdown
+import markdown
 from django.db.models import Q
 
 from .models import ArticlePost
@@ -25,7 +25,7 @@ def article_order(request, order):
 def article_list(request):
     try:
         order = request.COOKIES['order']
-    except:
+    except Exception:
         order = 'created'
     # 取出所有博客文章
     articles_list = ArticlePost.objects.all().order_by('-' + order)
@@ -35,6 +35,8 @@ def article_list(request):
             Q(title__icontains=search) |
             Q(body__icontains=search)
         )
+    else:
+        search = ''
     # 每页显示的文章，每页最少，可以首页为空
     paginator = Paginator(articles_list, 6, 3, True)
     # 获取 url 中的页码
@@ -59,15 +61,26 @@ def article_detail(request, article_id):
     try:
         article = ArticlePost.objects.get(id=article_id)
         # 将markdown语法渲染成html样式
-        article.body = markdown.markdown(
-            article.body,
+        md = markdown.Markdown(
             extensions=[
                 # 包含 缩写、表格等常用扩展
                 'markdown.extensions.extra',
                 # 语法高亮扩展
                 'markdown.extensions.codehilite',
+                # 目录扩展
+                'markdown.extensions.toc',
             ])
-        context = {'article': article}
+        article.body = md.convert(article.body)
+        if '<li>' in md.toc:
+            context = {
+                'article': article,
+                'toc': md.toc,
+            }
+        else:
+            context = {
+                'article': article,
+            }
+        print(md.toc)
         # 增加阅读量
         # todo 解决无登陆刷新也可以增加的问题
         print(request.GET)

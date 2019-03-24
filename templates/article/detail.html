@@ -25,40 +25,54 @@
                 },
             })
         }
+
+        function article_update() {
+            // 调用layer弹窗组件
+            location.href = '{% url "article:article_update" article.id %}'
+        }
     </script>
     <!-- 文章详情 -->
     <div class="container">
-        <div class="row">
-            <!-- 标题及作者 -->
-            <h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
-            <div class="col-12 alert alert-success">
-                作者：{{ article.author }} &nbsp;
-                浏览：{{ article.total_views }} &nbsp;
+    <div class="row">
+    {% if toc %}
+        <div class="col-3 mt-4">
+            <h4><strong>目录</strong></h4>
+            <hr>
+            <div>
+                {{ toc|safe }}
             </div>
-
-            {% if user == article.author %}
-                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                    <button type="button" onclick="confirm_delete()" class="btn btn-secondary">删除文章</button>
-                    <button type="button" class="btn btn-secondary">2</button>
-                    <div class="btn-group" role="group">
-                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            编辑
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                            <a class="dropdown-item" onclick="confirm_delete()">删除文章</a>
-                            <a class="dropdown-item" href="{% url "article:article_update" article.id %}">编辑文章</a>
-                            <a class="dropdown-item" href="#">Dropdown link</a>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-
-            <!-- 文章正文 -->
-            <div class="col-12">
-                <p>{{ article.body|safe }}</p>
+        </div>
+        <div class="col-9">
+    {% endif %}
+<!-- 标题及作者 -->
+<h1 class="col-12 mt-4 mb-4">{{ article.title }}</h1>
+<div class="col-12 alert alert-success">
+    作者：{{ article.author }} &nbsp;
+    浏览：{{ article.total_views }} &nbsp;
+</div>
+{% if user == article.author %}
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+        <button type="button" onclick="confirm_delete()" class="btn btn-secondary">删除文章</button>
+        <button type="button" class="btn btn-secondary" onclick="article_update()">编辑文章</button>
+        <div class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                编辑
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                <a class="dropdown-item" onclick="confirm_delete()">删除文章</a>
+                <a class="dropdown-item" href="{% url "article:article_update" article.id %}">编辑文章</a>
+                <a class="dropdown-item" href="#">Dropdown link</a>
             </div>
         </div>
     </div>
+{% endif %}
+<!-- 文章正文 -->
+<div class="col-12">
+    <p>{{ article.body|safe }}</p>
+</div>
+{% if toc %}
+    </div>
+{% endif %}
 
 {% endblock content %}
