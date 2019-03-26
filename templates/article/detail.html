@@ -74,7 +74,6 @@
         {% if toc %}
             </div>
         {% endif %}
-
     </div>
     <hr>
     {#    发表评论#}
@@ -109,8 +108,10 @@
         {% for comment in comments %}
             <hr>
             <p>
-                <strong>{{ comment.user }}</strong>于
-                <span>{{ comment.created|date:'Y-m-d H:i:s' }}</span>发表：
+                <strong style="color: pink">{{ comment.user }}</strong>
+                于
+                <span style="color: green">{{ comment.created|date:'Y年m月d日 H:i:s' }}</span>
+                发表：
             </p>
             <pre style="font-family: inherit; font-size: 1em;">{{ comment.body }}</pre>
         {% endfor %}
