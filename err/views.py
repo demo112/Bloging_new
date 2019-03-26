@@ -22,3 +22,7 @@ def wrong_input(request, e):
 
 def no_permission(request):
     return render(request, 'err/no_permission.html')
+
+
+def eggs(request):
+    return render(request, 'err/eggs.html')

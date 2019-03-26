@@ -1,18 +1,17 @@
 import random
-
 import markdown
-from django.db.models import Q
 
-from .models import ArticlePost
-# 引入redirect重定向模块
-from django.shortcuts import render, redirect, render_to_response
-# 引入HttpResponse
-from django.http import HttpResponse
-# 引入刚才定义的ArticlePostForm表单类
-from .forms import ArticlePostForm
+from django.db.models import Q
 # 引入User模型
 from django.contrib.auth.models import User
 from django.core.paginator import Paginator
+# 引入redirect重定向模块
+from django.shortcuts import render, redirect, render_to_response
+
+# 引入的表单类
+from .models import ArticlePost
+from .forms import ArticlePostForm
+from comment.models import Comment
 
 
 def article_order(request, order):
@@ -25,7 +24,8 @@ def article_order(request, order):
 def article_list(request):
     try:
         order = request.COOKIES['order']
-    except Exception:
+    except Exception as e:
+        # print(e)
         order = 'created'
     # 取出所有博客文章
     articles_list = ArticlePost.objects.all().order_by('-' + order)
@@ -71,19 +71,15 @@ def article_detail(request, article_id):
                 'markdown.extensions.toc',
             ])
         article.body = md.convert(article.body)
+        comments = Comment.objects.filter(article=article_id)
+        context = {
+            'article': article,
+            'comments': comments,
+        }
         if '<li>' in md.toc:
-            context = {
-                'article': article,
-                'toc': md.toc,
-            }
-        else:
-            context = {
-                'article': article,
-            }
-        print(md.toc)
+            context['toc'] = md.toc
         # 增加阅读量
         # todo 解决无登陆刷新也可以增加的问题
-        print(request.GET)
         if not article.author.id == request.user.id:
             article.total_views += 1
             article.save(update_fields=['total_views'])
@@ -119,7 +115,9 @@ def article_create(request):
         # 创建表单类实例
         article_post_form = ArticlePostForm()
         # 赋值上下文
-        context = {'article_post_form': article_post_form}
+        context = {
+            'article_post_form': article_post_form,
+        }
         # 返回模板
         return render(request, 'article/create.html', context)
     else:

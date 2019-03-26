@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'article',
     'err',
     'userprofile',
+    'comment',
 ]
 # 第三方应用
 INSTALLED_APPS += [

@@ -27,11 +27,13 @@ urlpatterns += [
     path('article/', include('article.urls', namespace='article')),
     path('userprofile/', include('userprofile.urls', namespace='userprofile')),
     path('password-reset/', include('password_reset.urls')),
+    path('comment/', include('comment.urls', namespace='comment')),
+    path('err/', include('err.urls', namespace='err')),
 
 ]
 
 urlpatterns += [
-    url(r'^|err/', include('err.urls', namespace='err')),
+    url(r'^', include('err.urls', namespace='err')),
 ]
 
 urlpatterns += static(
