@@ -89,6 +89,7 @@ def article_detail(request, article_id):
 
 
 def article_create(request):
+    # todo 完善markdown中图片功能
     if request.user.id:
         pass
     else:

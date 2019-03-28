@@ -321,19 +321,19 @@ permission_id</ColNames>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="77" parent="12" name="created">
+    <column id="77" parent="12" name="article_id">
       <Position>3</Position>
-      <DataType>date|0s</DataType>
+      <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="78" parent="12" name="article_id">
+    <column id="78" parent="12" name="user_id">
       <Position>4</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="79" parent="12" name="user_id">
+    <column id="79" parent="12" name="created">
       <Position>5</Position>
-      <DataType>integer|0s</DataType>
+      <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <index id="80" parent="12" name="comment_comment_article_id_3cc364fc">
